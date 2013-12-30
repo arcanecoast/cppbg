@@ -8,11 +8,11 @@ string cppbg_tra::escape_content(const string& Content)
 
     if (HasTildas && HasPercents && HasQuotes) {
         return "~~~~~" + Content + "~~~~~";
-    } else if (HasTildas && HasQuotes) {
-        return '%' + Content + '%';
-    } else if (HasPercents || HasTildas) {
+    } else if (!HasTildas) {
+        return '~' + Content + '~';
+    } else if (!HasQuotes){
         return '"' + Content + '"';
     }
 
-    return '~' + Content + '~';
+    return '%' + Content + '%';
 }
