@@ -17,16 +17,15 @@ namespace cppbg_tlk_v1
         string m_text;
         
     public:
-        TalkTableEntry() {}
-
         TalkTableEntry(short Flags, long VolumeVariance, long PitchVariance,
             const string& SoundResRef, const string Text) :
             m_flags(Flags),
             m_volumeVariance(VolumeVariance),
             m_pitchVariance(PitchVariance),
-            m_soundResRef(SoundResRef),
             m_text(Text)
-        {}
+        {
+            SetSoundResRef(SoundResRef);
+        }
 
         short  GetFlags() const { return m_flags; }
         long   GetPitchVariance() const { return m_pitchVariance; }
@@ -47,6 +46,6 @@ namespace cppbg_tlk_v1
             }
         }
     };
-};
+}
 
 #endif //CPPBG_TLK_V1_TALKTABLEENTRY
