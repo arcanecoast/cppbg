@@ -141,9 +141,9 @@ void LowLevelParser::LoadFromFile(const char* Filename)
                     last_entry_line_start = m_currentLineStart;
 
                 c = GetChar(in);
-                if (boundary_symbol[0] == '~' && c == '~') {
-                    boundary_symbol += c;
+                boundary_symbol += c;
 
+                if (boundary_symbol == "~~") {
                     for (int i = 0; i < 3; ++i) {
                         c = GetChar(in);
 
@@ -167,21 +167,19 @@ void LowLevelParser::LoadFromFile(const char* Filename)
 
                     if (boundary_symbol != "~~~~~") {
                         // Then, boundary symbol is ~
-                        for (int i = 1; i < boundary_symbol.length(); ++i) {
-                            in.unget();
+                        for (int i = 2; i < boundary_symbol.length(); ++i) {
+                            in.putback(boundary_symbol[i]);
                         }
 
                         boundary_symbol = '~';
-                    } else if (boundary_symbol == "\"\""
-                        || boundary_symbol == "~~"
-                        || boundary_symbol == "%%") {
-                        boundary_symbol = boundary_symbol[0];
-                        content += boundary_symbol[0];
-                    } else if (!in.good()) {
-                        throw SyntaxError(SyntaxError::ERROR_UNEXPECTED_END_OF_FILE);
+                        content = '~';
                     }
+                } else if (boundary_symbol[0] == '\"' || boundary_symbol[0] == '%' || boundary_symbol[0] == '~') {
+                    boundary_symbol = boundary_symbol[0];
+                    content += boundary_symbol[1];
                 } else {
-                    content += c;
+                    int currentOffset = in.tellg();
+                    throw SyntaxError(SyntaxError::ERROR_UNEXPECTED_SYMBOL, m_currentLineIndex, currentOffset - m_currentLineStart, currentOffset);
                 }
 
                 int boundary_symbol_length = boundary_symbol.length();

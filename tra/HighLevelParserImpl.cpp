@@ -4,7 +4,12 @@
 #include "LogicError.h"
 
 using namespace cppbg_tra;
-using namespace std;
+
+using std::pair;
+using std::ofstream;
+using std::ios_base;
+using std::endl;
+using boost::shared_ptr;
 
 void HighLevelParserImpl::CheckStack(LowLevelParser::container_type::iterator newElement, vector<LowLevelParser::container_type::iterator>& stack)
 {
