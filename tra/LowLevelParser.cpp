@@ -175,8 +175,8 @@ void LowLevelParser::LoadFromFile(const char* Filename)
                         content = '~';
                     }
                 } else if (boundary_symbol[0] == '\"' || boundary_symbol[0] == '%' || boundary_symbol[0] == '~') {
-                    boundary_symbol = boundary_symbol[0];
                     content += boundary_symbol[1];
+                    boundary_symbol = boundary_symbol[0];
                 } else {
                     int currentOffset = in.tellg();
                     throw SyntaxError(SyntaxError::ERROR_UNEXPECTED_SYMBOL, m_currentLineIndex, currentOffset - m_currentLineStart, currentOffset);

@@ -38,7 +38,6 @@ void TalkTable::LoadFromFile(const char* Filename)
 
 	unsigned long entriesCount = 0;
 	long  contentOffset = 0;
-	short languageID = 0;
 
     m_language = ENGLISH;
 
@@ -96,61 +95,53 @@ void TalkTable::LoadFromFile(const char* Filename)
 
 void TalkTable::SaveToFile(const char * Filename) const
 {
-	/*FILE * fOut = fopen(Filename, "wb");
-	if (!fOut) return false;
+    ofstream out(Filename, ios_base::out | ios::binary);
+    if (!out.good()) {
+        throw ios_base::failure("Unable to open file for writing!");
+    }
 
-	char Sign[] = "TLK V1  ";
-	fwrite(Sign, sizeof(char), 8, fOut);
+    out.write(TalkTable::SIGNATURE, 8);
 
-	fwrite(&this->LanguageID, sizeof(uint16), 1, fOut);
-	fwrite(&this->uItemsCount, sizeof(uint32), 1, fOut);
+    unsigned long entriesCount = this->GetItems().size();
+    long contentOffset = entriesCount * 26 + 18; /* 26 bytes per header talktable entry + 18 bytes per header info*/
 
-	uint32 uContentOffset = GetContentOffset();
-	fwrite(&uContentOffset, sizeof(uint32), 1, fOut);
+    out.write(reinterpret_cast<const char*>(&m_language), 2);
+    out.write(reinterpret_cast<const char*>(&entriesCount), 4);
+    out.write(reinterpret_cast<const char*>(&contentOffset), 4);
 
-	const uint32 uNullValue = 0;
-	uint32 bufValue = 0;
-	for (uint32 i = 0; i < this->uItemsCount; i++)
-	{
-		GotoItm(i);
+    char soundResRef[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+    long offsetToEntryContent = 0;
 
-		uint16 uFlags = ((CTLKItemV1 *)this->Items->Content)->Flags;
-		if (uFlags == 0)
-		{
-			if (((CTLKItemV1 *)this->Items->Content)->Text)
-				uFlags = SetBit16(uFlags, 0, true);
-			if (((CTLKItemV1 *)this->Items->Content)->SoundResRef[0] != '\0')
-				uFlags = SetBit16(uFlags, 1, true);
-		}
-			
-		fwrite(&uFlags, sizeof(uint16), 1, fOut);
-		fwrite(&((CTLKItemV1 *)this->Items->Content)->SoundResRef, sizeof(char), 8, fOut);
-		fwrite(&((CTLKItemV1 *)this->Items->Content)->VolumeVariance, sizeof(uint32), 1, fOut);
-		fwrite(&((CTLKItemV1 *)this->Items->Content)->PitchVariance, sizeof(uint32), 1, fOut);
+    for (unsigned long i = 0; i < entriesCount; i++)
+    {
+        short flags = GetItems()[i].GetFlags();
+        strncpy(soundResRef, GetItems()[i].GetSoundResRef().c_str(), 8);
+        long stringSize = GetItems()[i].GetText().length();
+        long volumeVariance = GetItems()[i].GetVolumeVariance();
+        long pitchVariance = GetItems()[i].GetPitchVariance();
 
-		if (((CTLKItemV1 *)this->Items->Content)->Text)
-		{
-			uint32 uLen = strlen(((CTLKItemV1 *)this->Items->Content)->Text);
-			fwrite(&bufValue, sizeof(uint32), 1, fOut);
-			fwrite(&uLen, sizeof(uint32), 1, fOut);
-			bufValue += uLen;
-		}
-		else
-		{
-			fwrite(&uNullValue, sizeof(uint32), 1, fOut);
-			fwrite(&uNullValue, sizeof(uint32), 1, fOut);
-		}
-	}
+        out.write(reinterpret_cast<const char*>(&flags), 2);
+        out.write(soundResRef, 8);
+        out.write(reinterpret_cast<const char*>(&volumeVariance), 4);
+        out.write(reinterpret_cast<const char*>(&pitchVariance), 4);
 
-	for (uint32 i = 0; i < this->uItemsCount; i++)
-	{
-		GotoItm(i);
+        if (stringSize > 0) {
+            out.write(reinterpret_cast<const char*>(&offsetToEntryContent), 4);
+            out.write(reinterpret_cast<const char*>(&stringSize), 4);
+        } else {
+            long nullValue = 0;
 
-		if (((CTLKItemV1 *)this->Items->Content)->Text)
-			fwrite(((CTLKItemV1 *)this->Items->Content)->Text, sizeof(char),
-				strlen(((CTLKItemV1 *)this->Items->Content)->Text), fOut);
-	}
+            out.write(reinterpret_cast<const char*>(&nullValue), 4);
+            out.write(reinterpret_cast<const char*>(&nullValue), 4);
+        }
 
-	fclose(fOut);
-	return true;*/
+        offsetToEntryContent += stringSize;
+    }
+
+    for (unsigned long i = 0; i < entriesCount; i++)
+    {
+        if (!GetItems()[i].GetText().empty()) {
+            out.write(GetItems()[i].GetText().c_str(), GetItems()[i].GetText().length());
+        }
+    }
 }
