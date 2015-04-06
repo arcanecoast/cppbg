@@ -1,5 +1,5 @@
-#ifndef CPPBG_TRA_HIGHLEVELPARSER 
-#define CPPBG_TRA_HIGHLEVELPARSER
+#ifndef CPPBG_TRA_HIGHLEVELPARSERIMPL 
+#define CPPBG_TRA_HIGHLEVELPARSERIMPL
 
 /**
  * Author: metamaker
@@ -8,35 +8,51 @@
  * Parser for WeiDU .tra files.
  */
 
+#include <string>
 #include <map>
+#include <vector>
 #include <boost/shared_ptr.hpp>
 
+#include "LowLevelParser.h"
 #include "TranslationEntry.h"
 
-using boost::shared_ptr;
+using std::string;
 using std::map;
+using std::vector;
+using boost::shared_ptr;
 
 namespace cppbg_tra
 {
-    class HighLevelParserImpl;
-
 	class HighLevelParser
 	{
     public:
         typedef map<int, shared_ptr<TranslationEntry> > container_type;
 
     public:
-        HighLevelParser();
-
         void LoadFromFile(const char* Filename);
         void SaveToFile(const char* Filename) const;
 
-        const container_type& GetItems() const;
-        container_type& GetItems();
+        const container_type& GetItems() const { return m_entries; }
+        container_type& GetItems() { return m_entries; }
 
     private:
-        shared_ptr<HighLevelParserImpl> pimpl;
+        struct LinkToEntry {
+            int id;
+            int idAssignedTo;
+            LowLevelParser::container_type::iterator referenceToAssignee;
+
+            LinkToEntry(int Id, int IdAssignedTo, LowLevelParser::container_type::iterator ReferenceToAssignee) : 
+                id(Id), idAssignedTo(IdAssignedTo), referenceToAssignee(ReferenceToAssignee) {}
+        };
+
+    private:
+        void CheckStack(LowLevelParser::container_type::iterator newElement, vector<LowLevelParser::container_type::iterator>& stack);
+        void AggregateEntry(int EntryID, vector<LowLevelParser::container_type::iterator>& stack);
+        int  GetIntID(LowLevelParser::container_type::iterator element);
+
+    private:
+        container_type m_entries;
 	};
 };
 
-#endif // CPPBG_TRA_HIGHLEVELPARSER
+#endif // CPPBG_TRA_HIGHLEVELPARSERIMPL
