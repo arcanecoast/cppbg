@@ -16,3 +16,8 @@ You can build this library with `CMake` (<http://www.cmake.org/>). The steps are
 4. Optionally, you can install library by building project which name is `INSTALL` in Visual Studio. Remember that you must have enough rights on your system to let VS copy files to installation folder.
 
 If you are using Visual Studio 12 you can build and install library by just running `scripts/build-vs2013.bat`.
+
+How to use
+----------
+
+To work with WeiDU .tra files please check `cppbg/tra/WeiDUModTranslation.h`. To work with .TLK v1 format check `cppbg/tlk_v1/TalkTableFile.h`.
