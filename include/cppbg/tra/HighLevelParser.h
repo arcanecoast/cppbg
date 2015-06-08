@@ -11,7 +11,7 @@
 #include <string>
 #include <map>
 #include <vector>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 #include "LowLevelParser.h"
 #include "TranslationEntry.h"
@@ -19,7 +19,7 @@
 using std::string;
 using std::map;
 using std::vector;
-using boost::shared_ptr;
+using std::shared_ptr;
 
 namespace cppbg_tra
 {

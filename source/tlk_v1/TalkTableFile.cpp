@@ -2,7 +2,7 @@
 #include <cstring>
 #include <stdexcept>
 
-#include "TalkTableFile.h"
+#include <cppbg/tlk_v1/TalkTableFile.h>
 
 using namespace cppbg_tlk_v1;
 using namespace std;

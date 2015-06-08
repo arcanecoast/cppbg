@@ -1,6 +1,6 @@
-#include "TranslationEntry.h"
-#include "TranslationEntryUtilities.h"
-#include "LogicError.h"
+#include <cppbg/tra/TranslationEntry.h>
+#include <cppbg/tra/TranslationEntryUtilities.h>
+#include <cppbg/tra/LogicError.h>
 
 using namespace cppbg_tra;
 

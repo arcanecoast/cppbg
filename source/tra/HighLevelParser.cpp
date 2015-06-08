@@ -1,7 +1,8 @@
 #include <fstream>
+#include <memory>
 
-#include "HighLevelParser.h"
-#include "LogicError.h"
+#include <cppbg/tra/HighLevelParser.h>
+#include <cppbg/tra/LogicError.h>
 
 using namespace cppbg_tra;
 
@@ -9,7 +10,7 @@ using std::pair;
 using std::ofstream;
 using std::ios_base;
 using std::endl;
-using boost::shared_ptr;
+using std::shared_ptr;
 
 void HighLevelParser::CheckStack(LowLevelParser::container_type::iterator newElement, vector<LowLevelParser::container_type::iterator>& stack)
 {

@@ -1,5 +1,5 @@
-#include "LowLevelEntry.h"
-#include "TranslationEntryUtilities.h"
+#include <cppbg/tra/LowLevelEntry.h>
+#include <cppbg/tra/TranslationEntryUtilities.h>
 
 using namespace cppbg_tra;
 

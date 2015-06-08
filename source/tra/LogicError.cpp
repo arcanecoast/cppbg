@@ -1,4 +1,4 @@
-#include "LogicError.h"
+#include <cppbg/tra/LogicError.h>
 
 using namespace cppbg_tra;
 

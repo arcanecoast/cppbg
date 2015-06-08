@@ -1,5 +1,5 @@
-#include "HighLevelParser.h"
-#include "WeiDUModTranslation.h"
+#include <cppbg/tra/HighLevelParser.h>
+#include <cppbg/tra/WeiDUModTranslation.h>
 
 using namespace cppbg_tra;
 

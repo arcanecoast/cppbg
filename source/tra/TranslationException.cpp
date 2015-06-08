@@ -1,4 +1,4 @@
-#include "TranslationException.h"
+#include <cppbg/tra/TranslationException.h>
 
 using namespace cppbg_tra;
 

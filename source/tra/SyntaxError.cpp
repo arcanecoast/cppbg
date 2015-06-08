@@ -1,4 +1,4 @@
-#include "SyntaxError.h"
+#include <cppbg/tra/SyntaxError.h>
 
 using namespace cppbg_tra;
 

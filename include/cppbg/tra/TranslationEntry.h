@@ -7,10 +7,10 @@
  */
 
 #include <string>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 using std::string;
-using boost::shared_ptr;
+using std::shared_ptr;
 
 namespace cppbg_tra
 {

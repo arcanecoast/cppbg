@@ -1,4 +1,4 @@
-#include "TranslationEntryUtilities.h"
+#include <cppbg/tra/TranslationEntryUtilities.h>
 
 string cppbg_tra::EscapeTranslationContent(const string& content)
 {

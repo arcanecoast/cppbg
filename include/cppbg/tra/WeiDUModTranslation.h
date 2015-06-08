@@ -9,11 +9,11 @@
  */
 
 #include <map>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 #include "TranslationEntry.h"
 
-using boost::shared_ptr;
+using std::shared_ptr;
 using std::map;
 
 namespace cppbg_tra

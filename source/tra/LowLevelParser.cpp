@@ -1,7 +1,7 @@
 #include <fstream>
 
-#include "SyntaxError.h"
-#include "LowLevelParser.h"
+#include <cppbg/tra/SyntaxError.h>
+#include <cppbg/tra/LowLevelParser.h>
 
 using namespace cppbg_tra;
 using namespace std;
