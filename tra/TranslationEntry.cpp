@@ -71,13 +71,13 @@ string TranslationEntry::GetWritableData() const
         sprintf(idval, "%i", m_linkedEntry->GetId());
         result += idval;
     } else {
-        result += escape_content(GetMainText());
+        result += EscapeTranslationContent(GetMainText());
         if (!GetMainSound().empty()) {
             result += " [" + GetMainSound() + ']';
         }
 
         if (!GetSecondaryText().empty()) {
-            result += ' ' + escape_content(GetSecondaryText());
+            result += ' ' + EscapeTranslationContent(GetSecondaryText());
 
             if (!GetSecondarySound().empty()) {
                 result += " [" + GetSecondarySound() + ']';

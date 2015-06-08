@@ -12,7 +12,7 @@ using std::string;
 
 namespace cppbg_tra
 {
-	string escape_content(const string& Content);
+	string EscapeTranslationContent(const string& content);
 };
 
 #endif // CPPBG_TRA_TRANSLATIONENTRYUTILITIES

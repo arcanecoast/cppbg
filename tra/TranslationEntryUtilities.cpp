@@ -1,18 +1,22 @@
 #include "TranslationEntryUtilities.h"
 
-string cppbg_tra::escape_content(const string& Content)
+string cppbg_tra::EscapeTranslationContent(const string& content)
 {
-    bool HasTildas   = Content.find('~') != string::npos;
-    bool HasPercents = Content.find('%') != string::npos;
-    bool HasQuotes   = Content.find('"') != string::npos;
+    string boundary;
 
-    if (HasTildas && HasPercents && HasQuotes) {
-        return "~~~~~" + Content + "~~~~~";
-    } else if (!HasTildas) {
-        return '~' + Content + '~';
-    } else if (!HasQuotes){
-        return '"' + Content + '"';
+    bool hasTilda   = content.find('~') != content.npos,
+         hasPercent = content.find('%') != content.npos,
+         hasQuote   = content.find('"') != content.npos;
+
+    if (!hasTilda) {
+        boundary = '~';
+    } else if (!hasQuote) {
+        boundary = '"';
+    } else if (!hasPercent) {
+        boundary = '%';
+    } else {
+        boundary = "~~~~~";
     }
 
-    return '%' + Content + '%';
+    return boundary + content + boundary;
 }

@@ -32,7 +32,7 @@ string LowLevelEntry::GetWritableData() const
     case ENTITY_ID:
         return '@' + m_content;
     case ENTITY_TEXT:
-        return escape_content(m_content);
+        return EscapeTranslationContent(m_content);
     case ENTITY_SOUND:
         return '[' + m_content + ']';
     default:
