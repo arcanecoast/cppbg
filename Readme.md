@@ -8,7 +8,7 @@ This library enables parsing of WeiDU .tra files and manipulation of .TLK v1 for
 How to build
 ------------
 
-You can build this library with `CMake` (<http://www.cmake.org/>). The steps are next:
+You can build this library with **CMake** (<http://www.cmake.org/>). The steps are next:
 
 1. Open command line and change current directory with `$ cd` command to the directory where you unpacked the project's source code.
 2. Run `$ cmake -H. -Bbuild -G "Visual Studio 12"` to create Makefile for Visual Studio 2013 (or use other generator if you use other IDE). Don't forget to specify path to dependency libraries and headers with -D parameter.
@@ -20,4 +20,4 @@ If you are using Visual Studio 12 you can build and install library by just runn
 How to use
 ----------
 
-To work with WeiDU .tra files please check `cppbg/tra/WeiDUModTranslation.h`. To work with .TLK v1 format check `cppbg/tlk_v1/TalkTableFile.h`.
+To work with WeiDU .tra files please check [cppbg/tra/WeiDUModTranslation.h](https://github.com/metamaker/cppbg/blob/master/include/cppbg/tra/WeiDUModTranslation.h). To work with .TLK v1 format check [cppbg/tlk_v1/TalkTableFile.h](https://github.com/metamaker/cppbg/blob/master/include/cppbg/tlk_v1/TalkTableFile.h).
